@@ -1,0 +1,78 @@
+1. membuat database myshop
+CREATE DATABASE myshop;
+
+
+
+2. membuat tabel di dalam database myshop
+-- Tabel users
+CREATE TABLE users (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255),
+    email VARCHAR(255),
+    passwords VARCHAR(255)
+);
+
+-- Tabel categories
+CREATE TABLE categories (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255)
+);
+
+-- Tabel items
+CREATE TABLE items (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(255),
+    description VARCHAR(255),
+    price INTEGER,
+    stock INTEGER,
+    category_id INTEGER,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+
+
+3. memasukan data dalam database myshop
+-- Memasukkan data ke dalam tabel users
+INSERT INTO users (nama, email, passwords) VALUES
+('John Doe', 'john@doe.com', 'password123'),
+('Jane Doe', 'jane@doe.com', 'password456');
+
+-- Memasukkan data ke dalam tabel categories
+INSERT INTO categories (nama) VALUES
+('gadget'),
+('cloth'),
+('men'),
+('women'),
+('branded');
+
+-- Memasukkan data ke dalam tabel items
+INSERT INTO items (nama, description, price, stock, category_id) VALUES
+('Sumsang b50', 'hape keren dari merek sumsang', 2000000, 10, 1),
+('Uniklooh', 'baju keren dari brand ternama', 800000, 15, 2),
+('IMHO Watch', 'jam tangan anak yang jujur banget', 1200000, 20, 3);
+
+
+
+
+4. Mengambil Data dari Database
+-- a. Mengambil data user pada tabel users kecuali passwords
+SELECT id, nama, email FROM users;
+
+-- b. Mengambil data pada tabel items dengan harga di atas 1000000
+SELECT * FROM items WHERE price > 1000000;
+
+-- Mengambil data item pada tabel items yang memiliki nama serupa atau mirip dengan kata kunci
+SELECT * FROM items WHERE nama LIKE '%uniklo%';
+
+-- Buatlah sebuah query untuk menampilkan data items yang dilengkapi dengandata nama kategori di 
+masing-masing items (gunakan join).
+SELECT items.nama, items.description, categories.nama AS category_nama
+FROM items
+JOIN categories ON items.category_id = categories.id;
+
+
+
+5.Mengubah Data dari Database
+-- Mengubah data pada tabel items untuk item dengan nama sumsang b50 menjadi harganya 2500000
+UPDATE items SET price = 2500000 WHERE nama = 'Sumsang b50';
+
